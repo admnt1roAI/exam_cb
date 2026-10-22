@@ -48,16 +48,14 @@ function mostrarPreguntas() {
 
     pregunta.options.forEach((opcion, opcionIndice) => {
       const letra = String.fromCharCode(97 + opcionIndice);
-      const claveOpcion = typeof opcion === "string" ? letra : opcion.key;
-      const textoOpcion = typeof opcion === "string" ? opcion : opcion.text;
       const etiqueta = document.createElement("label");
       etiqueta.className = "opt";
       const radio = document.createElement("input");
       radio.type = "radio";
       radio.name = `q${pregunta.id}`;
-      radio.value = claveOpcion;
+      radio.value = letra;
       radio.required = true;
-      etiqueta.append(radio, document.createTextNode(` ${letra}) ${textoOpcion}`));
+      etiqueta.append(radio, document.createTextNode(` ${letra}) ${opcion}`));
       opciones.append(etiqueta);
     });
 
@@ -65,14 +63,6 @@ function mostrarPreguntas() {
     listaPreguntas.append(tarjeta);
   });
   document.getElementById("exam-count").textContent = String(preguntas.length);
-}
-
-function letraOpcionVisible(pregunta, key) {
-  const index = pregunta?.options.findIndex((option, optionIndex) => {
-    const optionKey = typeof option === "string" ? String.fromCharCode(97 + optionIndex) : option.key;
-    return optionKey === key;
-  }) ?? -1;
-  return index >= 0 ? String.fromCharCode(97 + index) : String(key || "");
 }
 
 async function cargarExamen() {
@@ -97,7 +87,6 @@ async function cargarExamen() {
 }
 
 function crearDetalle(detalle) {
-  const preguntaOriginal = preguntas.find((item) => item.id === detalle.id);
   const tarjeta = document.createElement("article");
   tarjeta.className = `answer-card ${detalle.correct ? "is-correct" : "is-incorrect"}`;
   const titulo = document.createElement("h3");
@@ -107,10 +96,10 @@ function crearDetalle(detalle) {
   pregunta.textContent = detalle.question;
   const respuestaElegida = document.createElement("p");
   respuestaElegida.className = `answer-selected ${detalle.correct ? "is-correct" : "is-incorrect"}`;
-  respuestaElegida.textContent = `Tu respuesta: ${letraOpcionVisible(preguntaOriginal, detalle.selected).toUpperCase()}) ${detalle.selectedText}`;
+  respuestaElegida.textContent = `Tu respuesta: ${detalle.selected.toUpperCase()}) ${detalle.selectedText}`;
   const respuestaCorrecta = document.createElement("p");
   respuestaCorrecta.className = "correct-answer";
-  respuestaCorrecta.textContent = `Respuesta correcta: ${letraOpcionVisible(preguntaOriginal, detalle.correctAnswer).toUpperCase()}) ${detalle.correctText}`;
+  respuestaCorrecta.textContent = `Respuesta correcta: ${detalle.correctAnswer.toUpperCase()}) ${detalle.correctText}`;
   const explicacion = document.createElement("p");
   explicacion.className = "answer-explanation";
   explicacion.textContent = `Explicación: ${detalle.explanation}`;
@@ -154,7 +143,7 @@ cuestionario.addEventListener("submit", async (evento) => {
       puntaje: datos.score,
       detalles: datos.details.map((detalle) => ({
         id: detalle.id,
-        selected: letraOpcionVisible(preguntas.find((item) => item.id === detalle.id), detalle.selected),
+        selected: detalle.selected || "",
         correct: detalle.correct
       }))
     };

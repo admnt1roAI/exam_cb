@@ -10,7 +10,7 @@ const botonReiniciar = document.getElementById("reiniciar");
 
 function apiUrl() {
   const base = window.EXAM_CONFIG?.supabaseUrl?.trim();
-  if (!base || base.includes("TU-PROYECTO") || !window.EXAM_CONFIG?.supabaseAnonKey) {
+  if (!base || base.includes("TU-PROYECTO") || !window.EXAM_CONFIG?.supabaseKey) {
     throw new Error("Falta configurar la URL y la clave pública de Supabase en config.js.");
   }
   return `${base.replace(/\/$/, "")}/functions/v1/exam`;
@@ -21,8 +21,8 @@ async function llamarFuncion(opciones = {}) {
     ...opciones,
     headers: {
       "Content-Type": "application/json",
-      apikey: window.EXAM_CONFIG.supabaseAnonKey,
-      Authorization: `Bearer ${window.EXAM_CONFIG.supabaseAnonKey}`,
+      apikey: window.EXAM_CONFIG.supabaseKey,
+      Authorization: `Bearer ${window.EXAM_CONFIG.supabaseKey}`,
       ...(opciones.headers || {})
     }
   });

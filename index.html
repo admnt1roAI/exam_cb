@@ -18,6 +18,14 @@
       <div class="card">
         <p id="status" role="status" aria-live="polite">Cargando preguntas…</p>
         <form id="cuestionario" autocomplete="off" hidden>
+          <div class="candidate-fields">
+            <label for="nombre">Apellidos y nombres
+              <input id="nombre" name="nombre" type="text" autocomplete="name" maxlength="120" required>
+            </label>
+            <label for="dni">DNI
+              <input id="dni" name="dni" type="text" inputmode="numeric" autocomplete="off" maxlength="20" required>
+            </label>
+          </div>
           <div id="questions-list"></div>
           <div class="actions">
             <button type="submit" id="guardar">ENVIAR EXAMEN</button>

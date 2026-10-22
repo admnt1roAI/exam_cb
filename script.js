@@ -7,6 +7,7 @@ const estado = document.getElementById("status");
 const resultado = document.getElementById("resultado");
 const botonEnviar = document.getElementById("guardar");
 const botonReiniciar = document.getElementById("reiniciar");
+const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycbxiG8S7__jkM3NnACNo8_mdTX-3-DPWiNDpHVxIWm5__4z3oebF15Hlp7Qswajnqi63/exec";
 
 function apiUrl() {
   const base = window.EXAM_CONFIG?.supabaseUrl?.trim();
@@ -66,6 +67,7 @@ function mostrarPreguntas() {
 
 async function cargarExamen() {
   estado.hidden = false;
+  estado.classList.remove("status-success");
   estado.textContent = "Cargando preguntas…";
   cuestionario.hidden = true;
   resultado.hidden = true;
@@ -110,7 +112,10 @@ cuestionario.addEventListener("submit", async (evento) => {
   if (!cuestionario.reportValidity()) return;
   botonEnviar.disabled = true;
   estado.hidden = false;
+  estado.classList.remove("status-success");
   estado.textContent = "Enviando respuestas y calculando puntaje…";
+  const nombre = document.getElementById("nombre").value.trim();
+  const dni = document.getElementById("dni").value.trim();
 
   const answers = preguntas.map((pregunta) => ({
     id: pregunta.id,
@@ -127,6 +132,37 @@ cuestionario.addEventListener("submit", async (evento) => {
     resultado.append(resumen, ...datos.details.map(crearDetalle));
     resultado.hidden = false;
     botonReiniciar.hidden = false;
+
+    const ahora = new Date();
+    const pad = (valor) => String(valor).padStart(2, "0");
+    const fecha = `${ahora.getFullYear()}-${pad(ahora.getMonth() + 1)}-${pad(ahora.getDate())} ${pad(ahora.getHours())}:${pad(ahora.getMinutes())}:${pad(ahora.getSeconds())}`;
+    const registro = {
+      fecha,
+      nombre,
+      dni,
+      puntaje: datos.score,
+      detalles: datos.details.map((detalle) => ({
+        id: detalle.id,
+        selected: detalle.selected || "",
+        correct: detalle.correct
+      }))
+    };
+
+    estado.hidden = false;
+    estado.textContent = "Enviando el resultado a Google Sheets…";
+    try {
+      await fetch(GOOGLE_SHEETS_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=UTF-8" },
+        body: JSON.stringify(registro)
+      });
+      estado.classList.add("status-success");
+      estado.textContent = "Resultado enviado a Google Sheets. Confirma que figure en la hoja.";
+    } catch (error) {
+      estado.textContent = "El examen se calificó, pero no se pudo enviar el resultado a Google Sheets.";
+      console.error("Error al enviar el resultado a Google Sheets:", error);
+    }
   } catch (error) {
     estado.textContent = error.message;
     botonEnviar.disabled = false;

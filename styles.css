@@ -6,6 +6,11 @@ header { background: linear-gradient(180deg, #8b0000, #b22222); color: #fff; pad
 .container { width: min(1100px, 96%); min-height: 86vh; margin: 16px auto; padding: 16px; }
 .card { min-height: 82vh; padding: 22px; border-radius: 10px; background: #fff; box-shadow: 0 8px 26px #0f172a20; }
 #status { padding: 12px; border-radius: 8px; background: #fff8f8; color: #8b0000; font-weight: 700; }
+#status.status-success { background: #f0fdf4; color: #166534; }
+.candidate-fields { display: grid; grid-template-columns: 2fr 1fr; gap: 14px; margin: 0 0 18px; }
+.candidate-fields label { display: grid; gap: 6px; color: #374151; font-size: 14px; font-weight: 700; }
+.candidate-fields input { width: 100%; min-height: 42px; padding: 9px 11px; border: 1px solid #cbd5e1; border-radius: 7px; color: #111827; font: inherit; }
+.candidate-fields input:focus { outline: 2px solid #93c5fd; border-color: #2563eb; }
 #questions-list { max-height: 68vh; overflow-y: auto; padding-right: 6px; }
 .q-card, .answer-card { margin: 0 0 12px; padding: 14px; border: 1px solid #e5e7eb; border-radius: 8px; background: #fff; }
 .q-title { margin: 0; font-size: 15px; }
@@ -36,6 +41,7 @@ button:disabled { opacity: .6; cursor: wait; }
 .signature { padding: 8px; color: #fff; text-align: center; font-size: 12px; }
 [hidden] { display: none !important; }
 @media (max-width: 720px) {
+  .candidate-fields { grid-template-columns: 1fr; }
   .container { width: 100%; margin: 0; padding: 8px; }
   .card { padding: 14px; }
   .line3 { font-size: 17px; }

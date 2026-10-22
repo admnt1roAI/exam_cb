@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Administración del banco de preguntas del examen CB.">
+  <title>Administrar preguntas | Examen CB</title>
+  <link rel="stylesheet" href="admin.css">
+  <script src="config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="admin.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">EXAMEN SIMULACRO CB</p>
+      <h1>Administrar banco de preguntas</h1>
+    </div>
+    <a class="public-link" href="./">Ver página pública</a>
+  </header>
+
+  <main class="page-shell">
+    <section id="login-panel" class="panel login-panel">
+      <h2>Ingreso de administrador</h2>
+      <p>Inicia sesión con la cuenta autorizada en Supabase.</p>
+      <form id="login-form">
+        <label for="email">Correo electrónico</label>
+        <input id="email" name="email" type="email" autocomplete="username" required>
+        <label for="password">Contraseña</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required>
+        <button id="login-button" type="submit">Ingresar</button>
+      </form>
+      <p id="login-message" class="notice" role="status" aria-live="polite" hidden></p>
+    </section>
+
+    <section id="admin-panel" hidden>
+      <div class="panel admin-heading">
+        <div>
+          <h2>Banco de preguntas</h2>
+          <p>Sesión: <span id="admin-email"></span></p>
+        </div>
+        <button id="logout-button" class="button-secondary" type="button">Cerrar sesión</button>
+      </div>
+
+      <p id="admin-message" class="notice" role="status" aria-live="polite" hidden></p>
+
+      <section class="panel editor-panel">
+        <h2 id="editor-title">Agregar pregunta</h2>
+        <form id="question-form">
+          <input id="question-id" type="hidden">
+          <label for="question-text">Pregunta</label>
+          <textarea id="question-text" rows="3" maxlength="2000" required></textarea>
+
+          <fieldset class="options-fieldset">
+            <legend>Alternativas (completa las cinco)</legend>
+            <div class="option-editor"><span>A</span><input id="option-a" type="text" maxlength="1000" required aria-label="Alternativa A"></div>
+            <div class="option-editor"><span>B</span><input id="option-b" type="text" maxlength="1000" required aria-label="Alternativa B"></div>
+            <div class="option-editor"><span>C</span><input id="option-c" type="text" maxlength="1000" required aria-label="Alternativa C"></div>
+            <div class="option-editor"><span>D</span><input id="option-d" type="text" maxlength="1000" required aria-label="Alternativa D"></div>
+            <div class="option-editor"><span>E</span><input id="option-e" type="text" maxlength="1000" required aria-label="Alternativa E"></div>
+          </fieldset>
+
+          <label for="correct-answer">Alternativa correcta</label>
+          <select id="correct-answer" required>
+            <option value="a">A</option><option value="b">B</option><option value="c">C</option>
+            <option value="d">D</option><option value="e">E</option>
+          </select>
+
+          <label for="explanation">Explicación</label>
+          <textarea id="explanation" rows="3" maxlength="3000"></textarea>
+
+          <div class="form-actions">
+            <button id="save-question" type="submit">Guardar pregunta</button>
+            <button id="cancel-edit" class="button-secondary" type="button" hidden>Cancelar edición</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel bank-panel">
+        <div class="bank-toolbar">
+          <div>
+            <h2>Preguntas existentes</h2>
+            <p><span id="question-count">0</span> preguntas en Supabase</p>
+          </div>
+          <input id="search-questions" type="search" placeholder="Buscar pregunta…" aria-label="Buscar pregunta">
+        </div>
+        <div id="question-list" class="question-list" aria-live="polite"></div>
+      </section>
+    </section>
+  </main>
+
+  <footer>Panel privado · Las preguntas se guardan en Supabase</footer>
+</body>
+</html>

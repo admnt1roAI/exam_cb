@@ -1,0 +1,55 @@
+:root { font-family: Arial, Helvetica, sans-serif; color: #172033; background: #f1f4f8; }
+* { box-sizing: border-box; }
+body { margin: 0; min-height: 100vh; }
+.topbar { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px max(22px, calc((100% - 1120px) / 2)); color: #fff; background: linear-gradient(120deg, #790000, #b22222); }
+.topbar h1 { margin: 2px 0 0; font-size: clamp(22px, 4vw, 30px); }
+.eyebrow { margin: 0; font-size: 12px; font-weight: 800; letter-spacing: .1em; opacity: .85; }
+.public-link { color: #fff; font-weight: 700; }
+.page-shell { width: min(1120px, 94%); margin: 26px auto; }
+.panel { margin-bottom: 18px; padding: 22px; border: 1px solid #e2e8f0; border-radius: 12px; background: #fff; box-shadow: 0 5px 20px #0f172a0b; }
+.panel h2 { margin: 0 0 8px; }
+.panel p { color: #526075; }
+.login-panel { max-width: 480px; margin: 48px auto; }
+form { display: grid; gap: 9px; }
+label, legend { color: #334155; font-size: 14px; font-weight: 700; }
+input, textarea, select { width: 100%; min-height: 42px; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 7px; color: #172033; background: #fff; font: inherit; }
+textarea { resize: vertical; }
+input:focus, textarea:focus, select:focus { outline: 2px solid #bfdbfe; border-color: #2563eb; }
+button { min-height: 42px; padding: 10px 16px; border: 0; border-radius: 7px; color: #fff; background: #8b0000; font: inherit; font-weight: 800; cursor: pointer; }
+button:hover { background: #a40000; }
+button:disabled { opacity: .55; cursor: wait; }
+.button-secondary { color: #334155; border: 1px solid #cbd5e1; background: #fff; }
+.button-secondary:hover { background: #f1f5f9; }
+.admin-heading, .bank-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.admin-heading p, .bank-toolbar p { margin: 4px 0 0; }
+.options-fieldset { display: grid; gap: 9px; margin: 8px 0; padding: 14px; border: 1px solid #dbe3ed; border-radius: 8px; }
+.option-editor { display: grid; grid-template-columns: 32px 1fr; align-items: center; gap: 8px; }
+.option-editor span { display: grid; width: 28px; height: 28px; place-items: center; border-radius: 50%; color: #7f1d1d; background: #fee2e2; font-weight: 800; }
+.form-actions { display: flex; gap: 10px; margin-top: 8px; }
+.notice { padding: 12px 14px; border-radius: 8px; color: #7f1d1d; background: #fff1f2; font-weight: 700; }
+.notice.success { color: #166534; background: #f0fdf4; }
+.notice[hidden] { display: none; }
+.bank-toolbar { margin-bottom: 14px; }
+.bank-toolbar input { max-width: 320px; }
+.question-list { display: grid; gap: 10px; }
+.question-item { padding: 16px; border: 1px solid #e2e8f0; border-radius: 9px; }
+.question-item h3 { margin: 0 0 8px; font-size: 16px; }
+.question-item p { margin: 6px 0; line-height: 1.45; overflow-wrap: anywhere; }
+.question-item ol { padding-left: 24px; }
+.question-item li { margin: 4px 0; }
+.correct-option { color: #15803d; font-weight: 700; }
+.item-actions { display: flex; gap: 8px; margin-top: 12px; }
+.item-actions button { min-height: 36px; padding: 7px 12px; font-size: 14px; }
+.delete-button { background: #b91c1c; }
+.empty-state { padding: 22px; text-align: center; color: #64748b; }
+footer { padding: 10px; color: #64748b; text-align: center; font-size: 12px; }
+[hidden] { display: none !important; }
+@media (max-width: 640px) {
+  .topbar { align-items: flex-start; padding: 18px 16px; }
+  .topbar h1 { max-width: 230px; }
+  .page-shell { width: 100%; margin: 12px auto; padding: 0 10px; }
+  .panel { padding: 16px; }
+  .admin-heading, .bank-toolbar { align-items: stretch; flex-direction: column; }
+  .bank-toolbar input { max-width: none; }
+  .form-actions { flex-direction: column; }
+}

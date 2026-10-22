@@ -86,16 +86,20 @@ async function cargarExamen() {
 
 function crearDetalle(detalle) {
   const tarjeta = document.createElement("article");
-  tarjeta.className = "answer-card";
+  tarjeta.className = `answer-card ${detalle.correct ? "is-correct" : "is-incorrect"}`;
   const titulo = document.createElement("h3");
   titulo.textContent = `Pregunta ${detalle.index} · ${detalle.correct ? "Correcta" : "Incorrecta"}`;
   const pregunta = document.createElement("p");
+  pregunta.className = "answer-question";
   pregunta.textContent = detalle.question;
   const respuestaElegida = document.createElement("p");
+  respuestaElegida.className = `answer-selected ${detalle.correct ? "is-correct" : "is-incorrect"}`;
   respuestaElegida.textContent = `Tu respuesta: ${detalle.selected.toUpperCase()}) ${detalle.selectedText}`;
   const respuestaCorrecta = document.createElement("p");
+  respuestaCorrecta.className = "correct-answer";
   respuestaCorrecta.textContent = `Respuesta correcta: ${detalle.correctAnswer.toUpperCase()}) ${detalle.correctText}`;
   const explicacion = document.createElement("p");
+  explicacion.className = "answer-explanation";
   explicacion.textContent = `Explicación: ${detalle.explanation}`;
   tarjeta.append(titulo, pregunta, respuestaElegida, respuestaCorrecta, explicacion);
   return tarjeta;
